@@ -5,3 +5,19 @@
 .test {
   border: 1px solid red;
 }
+
+/* Chrome, Safari, Edge, Opera */
+.no-arrows::-webkit-outer-spin-button,
+.no-arrows::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.no-arrows[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.react-datepicker-wrapper {
+  display: block !important;
+}
