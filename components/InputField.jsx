@@ -2,7 +2,7 @@ const InputField = ({ children, type, name, placeholder, handleChange }) => {
   return (
     <div className="max-w-sm">
       <label className="block text-slate-700  mb-2" htmlFor={name}>
-        {children}
+        {children} <span className="text-red-500 italic">*</span>
       </label>
       <input
         onChange={(e) => handleChange(e)}

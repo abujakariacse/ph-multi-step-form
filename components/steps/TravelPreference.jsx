@@ -40,15 +40,12 @@ const TravelPreference = () => {
     });
   };
 
-  // Form submission handler (example)
+  // Form submission handler
   const handleSubmit = (event) => {
     event.preventDefault();
     // Here you can access all form data from formData object
     console.log("Form data:", formData);
-    // You can further process or submit this data as needed
   };
-
-  console.log(formData);
 
   return (
     <div>

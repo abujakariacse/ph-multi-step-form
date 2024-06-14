@@ -17,6 +17,7 @@
     "react-select-country-list": "^2.2.3"
   },
   "devDependencies": {
+    "@types/react": "^18.3.3",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
     "postcss": "^8",
