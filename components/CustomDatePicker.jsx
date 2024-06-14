@@ -2,7 +2,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const CustomDatePicker = ({ name, children }) => {
+const CustomDatePicker = ({ name, children, handleChange }) => {
   const [startDate, setStartDate] = useState(new Date());
 
   return (
@@ -11,10 +11,11 @@ const CustomDatePicker = ({ name, children }) => {
         {children}
       </label>
       <DatePicker
+        required={true}
         dateFormat="dd/MM/yyyy"
         placeholderText="Select a date"
         selected={startDate}
-        onChange={(date) => setStartDate(date)}
+        onChange={(e) => handleChange(name, e)}
         className="min-w-full px-3 py-2 border rounded outline-none text-gray-700 cursor-pointer"
       />
     </div>

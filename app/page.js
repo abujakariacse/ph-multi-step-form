@@ -1,6 +1,7 @@
 import StepControl from "@/components/StepControl";
 import Stepper from "@/components/Stepper";
-import Health from "@/components/steps/Health";
+import PersonalInfo from "@/components/steps/PersonalInfo";
+import TravelPreference from "@/components/steps/TravelPreference";
 
 export default function Home() {
   return (
@@ -15,7 +16,8 @@ export default function Home() {
           {/* Content & Control */}
           <div className="col-span-8">
             <div>
-              <Health />
+              {/* <PersonalInfo /> */}
+              <TravelPreference />
             </div>
             <StepControl />
           </div>
