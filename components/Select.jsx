@@ -1,4 +1,4 @@
-const Select = ({ options, placeholder, name, label, handleChange }) => {
+const Select = ({ options, placeholder, name, label, handleChange, value }) => {
   return (
     <div className="relative">
       <label className="block text-slate-700  mb-2" htmlFor={name}>
@@ -10,6 +10,7 @@ const Select = ({ options, placeholder, name, label, handleChange }) => {
         onChange={handleChange}
         id={name}
         name={name}
+        value={value || ""}
         className="block max-w-sm w-full text-sm  transition duration-75 border rounded h-10 outline-none text-grayy-700 pl-2 "
       >
         <option value="" className="">

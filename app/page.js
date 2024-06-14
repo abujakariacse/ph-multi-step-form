@@ -5,17 +5,13 @@ import Final from "@/components/steps/Final";
 import Health from "@/components/steps/Health";
 import PersonalInfo from "@/components/steps/PersonalInfo";
 import TravelPreference from "@/components/steps/TravelPreference";
+import { StepperContext } from "@/contexts/StepperContext";
+import { steps } from "@/utils/data";
 
 import { useState } from "react";
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(1);
-
-  const steps = [
-    "Personal Information",
-    "Travel Preference",
-    "Health & Safety",
-    "Complete",
-  ];
+  const [userData, setUserData] = useState({});
 
   const displayStep = (step) => {
     switch (step) {
@@ -50,7 +46,11 @@ export default function Home() {
 
           {/* Content & Control */}
           <div className="col-span-8">
-            <div className="min-h-[400px]">{displayStep(currentStep)}</div>
+            <div className="min-h-[400px]">
+              <StepperContext.Provider value={{ userData, setUserData }}>
+                {displayStep(currentStep)}
+              </StepperContext.Provider>
+            </div>
 
             {currentStep !== steps.length && (
               <StepperControl

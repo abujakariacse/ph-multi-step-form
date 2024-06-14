@@ -1,6 +1,11 @@
+import { StepperContext } from "@/contexts/StepperContext";
+import { useContext } from "react";
+
 export default function Final() {
+  const { userData, setUserData } = useContext(StepperContext);
+  console.log({ userData });
   return (
-    <div className="container md:mt-10">
+    <div className="container ">
       <div className="flex flex-col items-center">
         <div className="wrapper">
           <svg

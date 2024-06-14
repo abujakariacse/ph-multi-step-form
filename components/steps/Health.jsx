@@ -1,26 +1,22 @@
 "use client";
+import { StepperContext } from "@/contexts/StepperContext";
 import InputField from "../InputField";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 const Health = () => {
-  const [formData, setFormData] = useState({
-    healthDeclaration: "",
-    emergencyContact: "",
-    healthCondition: "",
-  });
+  const { userData, setUserData } = useContext(StepperContext);
 
-  // Function to handle input changes
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFormData({
-      ...formData,
+    setUserData({
+      ...userData,
       [name]: value,
     });
   };
 
   const handleRadioChange = (event) => {
-    setFormData({
-      ...formData,
+    setUserData({
+      ...userData,
       healthDeclaration: event.target.value,
     });
   };
@@ -28,11 +24,10 @@ const Health = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (!formData.healthDeclaration) {
+    if (!userData.healthDeclaration) {
       alert("Please select a health declaration.");
       return;
     }
-    console.log("Form data:", formData);
   };
 
   return (
@@ -60,7 +55,7 @@ const Health = () => {
               type="radio"
               name="healthDeclaration"
               value="Yes"
-              checked={formData.healthDeclaration === "Yes"}
+              checked={userData.healthDeclaration === "Yes"}
               onChange={handleRadioChange}
             />
             <i className="pl-2 not-italic">Yes</i>
@@ -71,7 +66,7 @@ const Health = () => {
               type="radio"
               name="healthDeclaration"
               value="No"
-              checked={formData.healthDeclaration === "No"}
+              checked={userData.healthDeclaration === "No"}
               onChange={handleRadioChange}
             />
             <i className="pl-2 not-italic">No</i>
@@ -82,7 +77,7 @@ const Health = () => {
           <InputField
             name="emergencyContact"
             placeholder="e.g. 01787944147"
-            value={formData.emergencyContact}
+            value={userData.emergencyContact}
             handleChange={handleInputChange}
             type="number"
           >
@@ -103,7 +98,7 @@ const Health = () => {
             id="healthCondition"
             rows="3"
             maxLength="256"
-            value={formData.healthCondition}
+            value={userData.healthCondition}
             onChange={handleInputChange}
             placeholder="Eg. Suffering from fever till 5 days with headache.  [Max 256 chars]"
             className="rounded-sm resize-none p-4 border bg-white border-solid border-black/10 focus:outline-none text-sm w-full"

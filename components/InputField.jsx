@@ -1,4 +1,11 @@
-const InputField = ({ children, type, name, placeholder, handleChange }) => {
+const InputField = ({
+  children,
+  type,
+  name,
+  placeholder,
+  handleChange,
+  value,
+}) => {
   return (
     <div className="max-w-sm">
       <label className="block text-slate-700  mb-2" htmlFor={name}>
@@ -10,6 +17,7 @@ const InputField = ({ children, type, name, placeholder, handleChange }) => {
         id={name}
         name={name}
         type={type || "text"}
+        value={value || ""}
         placeholder={placeholder}
         required={true}
       />

@@ -1,37 +1,31 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useContext } from "react";
 import InputField from "../InputField";
 import countryList from "react-select-country-list";
 import Select from "../Select";
 import CustomDatePicker from "../CustomDatePicker";
+import { StepperContext } from "@/contexts/StepperContext";
 
 const PersonalInfo = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    birthdate: new Date(),
-    country: "",
-    email: "",
-    phone: "",
-  });
+  const { userData, setUserData } = useContext(StepperContext);
 
   // Fetch country options using useMemo for optimization
   const options = useMemo(() => countryList().getData(), []);
-  console.log(options);
 
   // Function to handle input changes
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFormData({
-      ...formData,
+    setUserData({
+      ...userData,
       [name]: value,
     });
   };
 
   // Function to handle date picker change
   const handleDateChange = (name, date) => {
-    setFormData({
-      ...formData,
+    setUserData({
+      ...userData,
       [name]: date,
     });
   };
@@ -39,12 +33,7 @@ const PersonalInfo = () => {
   // Form submission handler (example)
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Here you can access all form data from formData object
-    console.log("Form data:", formData);
-    // You can further process or submit this data as needed
   };
-
-  console.log(formData);
 
   return (
     <div>
@@ -63,7 +52,7 @@ const PersonalInfo = () => {
           <InputField
             name={"name"}
             placeholder={"e.g. Abu Jakaria"}
-            value={formData.name}
+            value={userData?.name}
             handleChange={handleInputChange}
           >
             Full Name
@@ -73,7 +62,7 @@ const PersonalInfo = () => {
         <div>
           <CustomDatePicker
             name={"birthdate"}
-            selected={formData.birthdate}
+            selected={userData.birthdate}
             handleChange={handleDateChange}
           >
             Birthdate
@@ -86,7 +75,7 @@ const PersonalInfo = () => {
             name={"country"}
             placeholder={"Select a country"}
             options={options}
-            value={formData.country}
+            value={userData.country}
             handleChange={handleInputChange}
           />
         </div>
@@ -96,7 +85,7 @@ const PersonalInfo = () => {
             name={"email"}
             placeholder={"e.g. abujakaria316@gmail.com"}
             type={"email"}
-            value={formData.email}
+            value={userData.email}
             handleChange={handleInputChange}
           >
             Email Address
@@ -108,7 +97,7 @@ const PersonalInfo = () => {
             name={"phone"}
             placeholder={"e.g. 01316460386"}
             type={"tel"}
-            value={formData.phone}
+            value={userData.phone}
             handleChange={handleInputChange}
           >
             Phone

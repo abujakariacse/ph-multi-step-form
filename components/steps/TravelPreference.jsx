@@ -1,41 +1,28 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import InputField from "../InputField";
 import Select from "../Select";
 import CustomDatePicker from "../CustomDatePicker";
+import { StepperContext } from "@/contexts/StepperContext";
+import { accommodations } from "@/utils/data";
 
 const TravelPreference = () => {
-  const accommodations = [
-    {
-      value: "SH",
-      label: "Space Hotel",
-    },
-    {
-      value: "MB",
-      label: "Martian Base",
-    },
-  ];
-  const [formData, setFormData] = useState({
-    departureDate: new Date(),
-    returnDate: new Date(),
-    accommodation: null,
-    specialRequest: "",
-  });
+  const { userData, setUserData } = useContext(StepperContext);
 
   // Function to handle input changes
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFormData({
-      ...formData,
+    setUserData({
+      ...userData,
       [name]: value,
     });
   };
 
   // Function to handle date picker change
   const handleDateChange = (name, date) => {
-    setFormData({
-      ...formData,
+    setUserData({
+      ...userData,
       [name]: date,
     });
   };
@@ -43,8 +30,6 @@ const TravelPreference = () => {
   // Form submission handler
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Here you can access all form data from formData object
-    console.log("Form data:", formData);
   };
 
   return (
@@ -64,7 +49,7 @@ const TravelPreference = () => {
         <div>
           <CustomDatePicker
             name={"departureDate"}
-            selected={formData.departureDate}
+            selected={userData.departureDate}
             handleChange={handleDateChange}
           >
             Departure Date
@@ -73,7 +58,7 @@ const TravelPreference = () => {
         <div>
           <CustomDatePicker
             name={"returnDate"}
-            selected={formData.returnDate}
+            selected={userData.returnDate}
             handleChange={handleDateChange}
           >
             Return Date
@@ -86,7 +71,7 @@ const TravelPreference = () => {
             name={"accommodation"}
             placeholder={"Select an accommodation"}
             options={accommodations}
-            value={formData.accommodation}
+            value={userData.accommodation}
             handleChange={handleInputChange}
           />
         </div>
@@ -95,7 +80,7 @@ const TravelPreference = () => {
           <InputField
             name={"specialRequest"}
             placeholder={"e.g. Something special"}
-            value={formData.specialRequest}
+            value={userData.specialRequest}
             handleChange={handleInputChange}
           >
             Special Request
