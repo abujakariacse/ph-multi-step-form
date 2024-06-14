@@ -21,3 +21,7 @@
 .react-datepicker-wrapper {
   display: block !important;
 }
+
+.pattern-bg {
+  background-image: url("https://i.ibb.co/c17mLqC/pattern-home.jpg");
+}
