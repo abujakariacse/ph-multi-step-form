@@ -1,7 +1,9 @@
 const StepperControl = ({ steps, currentStep, handleClick }) => {
   return (
     <div className="max-w-sm">
-      <div className={`container flex justify-end gap-5 text-sm select-none`}>
+      <div
+        className={`container flex justify-end gap-5 text-sm select-none border-none`}
+      >
         {currentStep !== 1 && (
           <button
             onClick={() => handleClick()}

@@ -64,7 +64,6 @@ const Stepper = ({ steps, currentStep }) => {
   }, [steps, currentStep]);
 
   const stepsDisplay = newStep.map((step, index) => {
-    console.log(step);
     return (
       <div key={index} className="flex">
         <div className="mr-4 flex flex-col items-center">

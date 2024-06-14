@@ -1,11 +1,4 @@
-const InputField = ({
-  children,
-  type,
-  name,
-  placeholder,
-  handleChange,
-  value,
-}) => {
+const InputField = ({ children, type, name, placeholder, value, register }) => {
   return (
     <div className="max-w-sm">
       <label className="block text-slate-700  mb-2 text-xs" htmlFor={name}>
@@ -15,13 +8,12 @@ const InputField = ({
         onChange={(e) => handleChange(e)}
         className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-gray-300 no-arrows placeholder:text-sm placeholder:text-secondary placeholder:font-normal text-sm`}
         id={name}
+        defaultValue={value || ""}
         name={name}
         type={type || "text"}
-        value={value || ""}
         placeholder={placeholder}
-        required={true}
+        {...register(name, { required: true })}
       />
-      {/* <p className="text-red-500 text-xs mt-1">Invalid email</p> */}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-const Select = ({ options, placeholder, name, label, handleChange, value }) => {
+const Select = ({ options, placeholder, name, label, register, value }) => {
   return (
     <div className="relative">
       <label className="block text-slate-700  mb-2 text-xs" htmlFor={name}>
@@ -6,16 +6,13 @@ const Select = ({ options, placeholder, name, label, handleChange, value }) => {
         <span className="text-red-500 italic">*</span>
       </label>
       <select
-        required={true}
-        onChange={handleChange}
+        defaultValue={value || ""}
+        {...register(name, { required: true })}
         id={name}
         name={name}
-        value={value || ""}
         className="block max-w-sm w-full text-sm  transition duration-75 border rounded h-10 outline-none text-grayy-700 pl-2 cursor-pointer"
       >
-        <option value="" className="default-selected">
-          {placeholder}
-        </option>
+        <option value="">{placeholder}</option>
         {options?.map((option) => (
           <option key={option?.value} value={option?.label}>
             {option?.label}

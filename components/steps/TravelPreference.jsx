@@ -7,29 +7,24 @@ import CustomDatePicker from "../CustomDatePicker";
 import { StepperContext } from "@/contexts/StepperContext";
 import { accommodations } from "@/utils/data";
 
+import { useForm, Controller } from "react-hook-form";
+
 const TravelPreference = () => {
   const { userData, setUserData } = useContext(StepperContext);
+  console.log(userData);
+  const {
+    control,
+    register,
+    handleSubmit,
 
-  // Function to handle input changes
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
     setUserData({
       ...userData,
-      [name]: value,
+      ...data,
     });
-  };
-
-  // Function to handle date picker change
-  const handleDateChange = (name, date) => {
-    setUserData({
-      ...userData,
-      [name]: date,
-    });
-  };
-
-  // Form submission handler
-  const handleSubmit = (event) => {
-    event.preventDefault();
   };
 
   return (
@@ -44,36 +39,65 @@ const TravelPreference = () => {
         </p>
       </div>
 
-      {/* Form */}
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 py-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4 py-4"
+      >
         <div>
-          <CustomDatePicker
+          <Controller
+            rules={{ required: "Depature date is required" }}
+            control={control}
             name={"departureDate"}
-            selected={userData?.departureDate}
-            handleChange={handleDateChange}
-          >
-            Departure Date
-          </CustomDatePicker>
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <CustomDatePicker
+                handleChange={onChange}
+                handleBlur={onBlur}
+                selected={value}
+                name="departureDate"
+                value={userData?.departureDate}
+              >
+                Departure Date
+              </CustomDatePicker>
+            )}
+          />
+          <p className="text-xs text-red-500 py-1">
+            {errors?.departureDate?.message}
+          </p>
         </div>
         <div>
-          <CustomDatePicker
+          <Controller
+            rules={{ required: "Return date is required" }}
+            control={control}
             name={"returnDate"}
-            selected={userData?.returnDate}
-            handleChange={handleDateChange}
-          >
-            Return Date
-          </CustomDatePicker>
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <CustomDatePicker
+                handleChange={onChange}
+                handleBlur={onBlur}
+                selected={value}
+                name="returnDate"
+                value={userData?.returnDate}
+              >
+                Return Date
+              </CustomDatePicker>
+            )}
+          />
+          <p className="text-xs text-red-500 py-1">
+            {errors?.returnDate?.message}
+          </p>
         </div>
 
         <div className="">
           <Select
+            register={register}
             label="Accommodation Preference"
-            name={"accommodation"}
+            name="accommodation"
             placeholder={"Select an accommodation"}
             options={accommodations}
             value={userData?.accommodation}
-            handleChange={handleInputChange}
           />
+          <p className="text-xs text-red-500 py-1">
+            {errors?.accommodation && "Please select an accommodation "}
+          </p>
         </div>
 
         <div className="">
@@ -81,11 +105,15 @@ const TravelPreference = () => {
             name={"specialRequest"}
             placeholder={"e.g. Something special"}
             value={userData?.specialRequest}
-            handleChange={handleInputChange}
+            register={register}
           >
             Special Request
           </InputField>
+          <p className="text-xs text-red-500 py-1">
+            {errors?.specialRequest && "Special Request is required"}
+          </p>
         </div>
+        <input type="submit" value="Test" />
       </form>
     </div>
   );

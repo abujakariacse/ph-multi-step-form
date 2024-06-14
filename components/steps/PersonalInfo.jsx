@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState, useMemo, useContext } from "react";
+import React, { useMemo, useContext } from "react";
 import InputField from "../InputField";
 import countryList from "react-select-country-list";
 import Select from "../Select";
 import CustomDatePicker from "../CustomDatePicker";
 import { StepperContext } from "@/contexts/StepperContext";
+
+import { useForm, Controller } from "react-hook-form";
 
 const PersonalInfo = () => {
   const { userData, setUserData } = useContext(StepperContext);
@@ -13,31 +15,25 @@ const PersonalInfo = () => {
   // Fetch country options using useMemo for optimization
   const options = useMemo(() => countryList().getData(), []);
 
-  // Function to handle input changes
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
+  const onSubmit = (data) => {
     setUserData({
       ...userData,
-      [name]: value,
+      ...data,
     });
   };
 
-  // Function to handle date picker change
-  const handleDateChange = (name, date) => {
-    setUserData({
-      ...userData,
-      [name]: date,
-    });
-  };
+  console.log({ userData }, "line 25");
 
-  // Form submission handler (example)
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
+  const {
+    control,
+    register,
+    handleSubmit,
+
+    formState: { errors },
+  } = useForm();
 
   return (
     <div>
-      {/* Section for Personal Info */}
       <div className="">
         <h1 className="text-heading font-semibold text-slate-80000">
           Personal Info
@@ -48,38 +44,58 @@ const PersonalInfo = () => {
         </p>
       </div>
 
-      {/* Form */}
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 py-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4 py-4"
+      >
         <div className="">
           <InputField
             name={"name"}
             placeholder={"e.g. Abu Jakaria"}
             value={userData?.name}
-            handleChange={handleInputChange}
+            register={register}
           >
             Full Name
           </InputField>
+          <p className="text-xs text-red-500 py-1">
+            {errors?.name && "Name is required"}
+          </p>
         </div>
 
         <div>
-          <CustomDatePicker
-            name={"birthdate"}
-            selected={userData?.birthdate}
-            handleChange={handleDateChange}
-          >
-            Birthdate
-          </CustomDatePicker>
+          <Controller
+            rules={{ required: "Birthdate is required" }}
+            control={control}
+            name="birthdate"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <CustomDatePicker
+                handleChange={onChange}
+                handleBlur={onBlur}
+                selected={value}
+                name="birthdate"
+                value={userData?.birthdate}
+              >
+                Birthdate
+              </CustomDatePicker>
+            )}
+          />
+          <p className="text-xs text-red-500 py-1">
+            {errors?.birthdate?.message}
+          </p>
         </div>
 
         <div className="">
           <Select
+            register={register}
             label="Nationality"
             name={"country"}
             placeholder={"Select a country"}
             options={options}
             value={userData?.country}
-            handleChange={handleInputChange}
           />
+          <p className="text-xs text-red-500 py-1">
+            {errors?.country && "Select a country"}
+          </p>
         </div>
 
         <div className="">
@@ -88,23 +104,30 @@ const PersonalInfo = () => {
             placeholder={"e.g. abujakaria316@gmail.com"}
             type={"email"}
             value={userData?.email}
-            handleChange={handleInputChange}
+            register={register}
           >
             Email Address
           </InputField>
+          <p className="text-xs text-red-500 py-1">
+            {errors?.email && "Email is required"}
+          </p>
         </div>
 
         <div className="">
           <InputField
             name={"phone"}
             placeholder={"e.g. 01316460386"}
-            type={"tel"}
+            type={"number"}
             value={userData?.phone}
-            handleChange={handleInputChange}
+            register={register}
           >
             Phone
           </InputField>
+          <p className="text-xs text-red-500 py-1">
+            {errors?.phone && "Phone is required"}
+          </p>
         </div>
+        <input type="submit" value="Test" />
       </form>
     </div>
   );
