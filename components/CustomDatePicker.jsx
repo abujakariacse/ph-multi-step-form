@@ -7,7 +7,7 @@ const CustomDatePicker = ({ name, children, handleChange, selected }) => {
 
   return (
     <div className="max-w-sm">
-      <label className="block text-slate-700  mb-2" htmlFor={name}>
+      <label className="block text-slate-700  mb-2 text-xs" htmlFor={name}>
         {children} <span className="text-red-500 italic">*</span>
       </label>
       <DatePicker
@@ -16,7 +16,7 @@ const CustomDatePicker = ({ name, children, handleChange, selected }) => {
         placeholderText="Select a date"
         selected={selected || startDate}
         onChange={(e) => handleChange(name, e)}
-        className="min-w-full px-3 py-2 border rounded outline-none text-gray-700 cursor-pointer"
+        className="min-w-full px-3 text-subHeading placeholder:text-secondary py-2 border rounded outline-none text-gray-700 cursor-pointer"
       />
     </div>
   );

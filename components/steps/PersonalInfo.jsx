@@ -39,8 +39,10 @@ const PersonalInfo = () => {
     <div>
       {/* Section for Personal Info */}
       <div className="">
-        <h1 className="text-2xl font-medium text-slate-80000">Personal Info</h1>
-        <p className="text-xs text-gray-500 py-1">
+        <h1 className="text-heading font-semibold text-slate-80000">
+          Personal Info
+        </h1>
+        <p className="text-xs text-zinc-300 py-2">
           Please provide your name, birth date, nationality, email address,
           phone
         </p>
@@ -62,7 +64,7 @@ const PersonalInfo = () => {
         <div>
           <CustomDatePicker
             name={"birthdate"}
-            selected={userData.birthdate}
+            selected={userData?.birthdate}
             handleChange={handleDateChange}
           >
             Birthdate
@@ -75,7 +77,7 @@ const PersonalInfo = () => {
             name={"country"}
             placeholder={"Select a country"}
             options={options}
-            value={userData.country}
+            value={userData?.country}
             handleChange={handleInputChange}
           />
         </div>
@@ -85,7 +87,7 @@ const PersonalInfo = () => {
             name={"email"}
             placeholder={"e.g. abujakaria316@gmail.com"}
             type={"email"}
-            value={userData.email}
+            value={userData?.email}
             handleChange={handleInputChange}
           >
             Email Address
@@ -97,7 +99,7 @@ const PersonalInfo = () => {
             name={"phone"}
             placeholder={"e.g. 01316460386"}
             type={"tel"}
-            value={userData.phone}
+            value={userData?.phone}
             handleChange={handleInputChange}
           >
             Phone

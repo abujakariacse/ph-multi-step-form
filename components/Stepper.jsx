@@ -1,50 +1,103 @@
-const Stepper = () => {
-  return (
-    <div className="bg-[#483EFF] p-5 rounded-sm">
-      <div className="">
-        <div className="flex">
-          <div className="mr-4 flex flex-col items-center">
-            <div>
-              <div className="flex size-9 items-center justify-center rounded-full border-2 border-white text-white">
-                1
-              </div>
-            </div>
-            <div className="h-full w-px bg-gray-600 "></div>
-          </div>
-          <div className="pt-1 pb-8">
-            <p className="mb-2 text-sm text-white">Step 1</p>
-            <p className="text-white font-medium">Personal Info</p>
-          </div>
-        </div>
+import { useEffect, useRef, useState } from "react";
 
-        <div className="flex">
-          <div className="mr-4 flex flex-col items-center">
-            <div>
-              <div className="flex size-9 items-center justify-center rounded-full border-2 border-white bg-transparent">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-6 w-6 text-white dark:text-slate-200"
-                >
-                  <path d="M5 12l5 5l10 -10"></path>
-                </svg>
-              </div>
+const Stepper = ({ steps, currentStep }) => {
+  const [newStep, setNewStep] = useState([]);
+  const stepsRef = useRef();
+
+  const updateStep = (stepNumber, steps) => {
+    const newSteps = [...steps];
+
+    let count = 0;
+    while (count < newSteps.length) {
+      //current step
+      if (count === stepNumber) {
+        newSteps[count] = {
+          ...newSteps[count],
+          highlighted: true,
+          selected: true,
+          completed: true,
+        };
+        count++;
+      }
+
+      //step completed
+      else if (count < stepNumber) {
+        newSteps[count] = {
+          ...newSteps[count],
+          highlighted: false,
+          selected: true,
+          completed: true,
+        };
+        count++;
+      }
+      //step pending
+      else {
+        newSteps[count] = {
+          ...newSteps[count],
+          highlighted: false,
+          selected: false,
+          completed: false,
+        };
+        count++;
+      }
+    }
+
+    return newSteps;
+  };
+
+  useEffect(() => {
+    const stepsState = steps.map((step, index) =>
+      Object.assign(
+        {},
+        {
+          description: step,
+          completed: false,
+          highlighted: index === 0 ? true : false,
+          selected: index === 0 ? true : false,
+        }
+      )
+    );
+
+    stepsRef.current = stepsState;
+    const current = updateStep(currentStep - 1, stepsRef.current);
+    setNewStep(current);
+  }, [steps, currentStep]);
+
+  const stepsDisplay = newStep.map((step, index) => {
+    console.log(step);
+    return (
+      <div key={index} className="flex">
+        <div className="mr-4 flex flex-col items-center">
+          <div>
+            <div
+              className={`flex size-9 items-center justify-center rounded-full border-2 ${
+                step?.completed ? "border-primary" : "border-circle"
+              }  ${step?.completed ? " bg-primary" : "bg-transparent"}`}
+            >
+              {step?.completed ? (
+                <span className="text-white">&#10003;</span>
+              ) : (
+                <span className="text-secondary"> {index + 1}</span>
+              )}
             </div>
           </div>
-          <div className="pt-1 ">
-            <p className="mb-2 text-sm  text-white dark:text-slate-300">
-              Ready
-            </p>
-          </div>
+          <div
+            className={`h-full  w-[1.5px]  ${
+              step?.completed ? "bg-primary" : "bg-circle"
+            } ${index === steps.length - 1 ? "hidden" : "block"} `}
+          ></div>
+        </div>
+        <div className="pt-1 pb-8">
+          <p className="mb-2 text-xs text-secondary">Step {index + 1}</p>
+          <p className="text-secondary text-sm">{step?.description}</p>
         </div>
       </div>
+    );
+  });
+
+  return (
+    <div className="p-5 rounded-sm">
+      <div className="">{stepsDisplay}</div>
     </div>
   );
 };

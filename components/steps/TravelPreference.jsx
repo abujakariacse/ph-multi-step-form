@@ -35,10 +35,10 @@ const TravelPreference = () => {
   return (
     <div>
       <div className="">
-        <h1 className="text-2xl font-medium text-slate-80000">
+        <h1 className="text-heading font-medium text-slate-80000">
           Travel Preference
         </h1>
-        <p className="text-xs text-gray-500 py-1">
+        <p className="text-xs text-secondary py-2">
           Please provide departure date, return date, accommdation preference,
           special request
         </p>
@@ -49,7 +49,7 @@ const TravelPreference = () => {
         <div>
           <CustomDatePicker
             name={"departureDate"}
-            selected={userData.departureDate}
+            selected={userData?.departureDate}
             handleChange={handleDateChange}
           >
             Departure Date
@@ -58,7 +58,7 @@ const TravelPreference = () => {
         <div>
           <CustomDatePicker
             name={"returnDate"}
-            selected={userData.returnDate}
+            selected={userData?.returnDate}
             handleChange={handleDateChange}
           >
             Return Date
@@ -71,7 +71,7 @@ const TravelPreference = () => {
             name={"accommodation"}
             placeholder={"Select an accommodation"}
             options={accommodations}
-            value={userData.accommodation}
+            value={userData?.accommodation}
             handleChange={handleInputChange}
           />
         </div>
@@ -80,7 +80,7 @@ const TravelPreference = () => {
           <InputField
             name={"specialRequest"}
             placeholder={"e.g. Something special"}
-            value={userData.specialRequest}
+            value={userData?.specialRequest}
             handleChange={handleInputChange}
           >
             Special Request
