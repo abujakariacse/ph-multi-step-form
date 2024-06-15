@@ -44,23 +44,24 @@ export default function Home() {
         .dispatchEvent(
           new Event("submit", { cancelable: true, bubbles: true })
         );
-
-      if (currentStep === steps.length) {
-        const res = await fetch("/api/travel", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-
-        const data = await res.json();
-        console.log(data);
-      }
     } else {
       setCurrentStep((prevStep) => prevStep - 1);
     }
   };
+
+  useEffect(() => {
+    if (currentStep === steps.length) {
+      fetch("/api/travel", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+    }
+  }, [currentStep, steps.length]);
 
   return (
     <div className="pattern-bg">

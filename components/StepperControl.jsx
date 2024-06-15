@@ -3,6 +3,7 @@ import { useContext } from "react";
 
 const StepperControl = () => {
   const { steps, currentStep, handleClick } = useContext(StepperContext);
+
   return (
     <div className="max-w-sm">
       <div
