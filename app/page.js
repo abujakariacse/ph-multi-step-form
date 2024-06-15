@@ -65,13 +65,13 @@ export default function Home() {
 
   return (
     <div className="pattern-bg">
-      <div className="flex items-center justify-center min-h-screen ">
+      <div className="flex items-center justify-center min-h-screen">
         <div className="mx-auto rounded-lg bg-white md:w-8/12 p-5 ">
-          <div className="grid grid-cols-12 gap-10 ">
+          <div className="md:grid md:grid-cols-12 md:gap-10 ">
             {/* Stepper */}
-            <div className="w-full col-span-5 flex gap-16">
+            <div className="w-full col-span-5 flex md:gap-16 md:justify-normal justify-center">
               <Stepper steps={steps} currentStep={currentStep} />
-              <div className="w-0.5 bg-accent my-auto h-96"></div>
+              <div className="w-0.5 bg-accent my-auto h-96 hidden md:block"></div>
             </div>
 
             {/* Content & Control */}

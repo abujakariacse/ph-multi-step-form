@@ -30,10 +30,10 @@ const PersonalInfo = ({}) => {
   return (
     <div>
       <div>
-        <h1 className="text-heading font-semibold text-slate-80000">
+        <h1 className="text-heading font-semibold text-slate-80000 text-center md:text-left">
           Personal Info
         </h1>
-        <p className="text-xs text-zinc-300 py-2">
+        <p className="text-xs text-zinc-300 py-2 text-center md:text-left">
           Please provide your name, birth date, nationality, email address,
           phone
         </p>

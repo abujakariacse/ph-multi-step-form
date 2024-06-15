@@ -22,10 +22,10 @@ const Health = () => {
   return (
     <div>
       <div>
-        <h1 className="text-2xl font-medium text-slate-800 text-heading">
+        <h1 className="text-2xl font-medium text-slate-800 text-heading text-center md:text-left">
           Health & Safety
         </h1>
-        <p className="text-xs text-secondary py-2">
+        <p className="text-xs text-secondary py-2 text-center md:text-left">
           Please provide health declaration, emergency contact, medical
           condition, special request
         </p>

@@ -57,22 +57,26 @@ export const healthSchema = z.object({
     .max(256, "Health Condition should not exceed 256 characters"),
 });
 
-// export const travelPreferenceSchema = z.object({
-//   departureDate: z.date().refine(
-//     (date) => {
-//       const today = new Date();
-//       today.setHours(0, 0, 0, 0); // Reset time to midnight for accurate comparison
-//       return date.getTime() >= today.getTime(); // Allow today's date or later
-//     },
-//     { message: "Departure date must be today or later" }
-//   ),
-//   returnDate: z.date().refine(
-//     (date, data) => {
-//       if (!data || !data.departureDate) return true; // Allow validation to pass if departure date is not set
-//       return date.getTime() > data.departureDate.getTime(); // Ensure return date is after departure date
-//     },
-//     { message: "Return date must be after departure date" }
-//   ),
-//   accommodation: z.string().nonempty("Accommodation preference is required"),
-//   specialRequest: z.string().nonempty("Special request is required"),
-// });
+export const travelPreferenceSchema = z
+  .object({
+    departureDate: z.date({
+      required_error: "Departure date is required",
+      invalid_type_error: "Departure date must be a valid date",
+    }),
+    returnDate: z.date({
+      required_error: "Return date is required",
+      invalid_type_error: "Return date must be a valid date",
+    }),
+
+    accommodation: z.string().nonempty({ message: "Name is required" }),
+    specialRequest: z.string().nonempty({ message: "Name is required" }),
+  })
+  .superRefine(({ departureDate, returnDate }, ctx) => {
+    if (returnDate <= departureDate) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Return date must be after departure date",
+        path: ["returnDate"],
+      });
+    }
+  });
