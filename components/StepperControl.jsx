@@ -1,4 +1,8 @@
-const StepperControl = ({ steps, currentStep, handleClick }) => {
+import { StepperContext } from "@/contexts/StepperContext";
+import { useContext } from "react";
+
+const StepperControl = () => {
+  const { steps, currentStep, handleClick } = useContext(StepperContext);
   return (
     <div className="max-w-sm">
       <div
@@ -14,6 +18,7 @@ const StepperControl = ({ steps, currentStep, handleClick }) => {
         )}
 
         <button
+          type="submit"
           onClick={() => handleClick("next")}
           className="cursor-pointer rounded border bg-primary outline-none py-3 w-20 text-white transition duration-150 ease-in-out select-none text-sm font-medium"
         >

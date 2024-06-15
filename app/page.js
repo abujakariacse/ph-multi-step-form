@@ -8,10 +8,18 @@ import TravelPreference from "@/components/steps/TravelPreference";
 import { StepperContext } from "@/contexts/StepperContext";
 import { steps } from "@/utils/data";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(1);
   const [userData, setUserData] = useState({});
+
+  const handleFormSubmit = (data) => {
+    setUserData({
+      ...userData,
+      ...data,
+    });
+    setCurrentStep((prevStep) => prevStep + 1);
+  };
 
   const displayStep = (step) => {
     switch (step) {
@@ -29,10 +37,16 @@ export default function Home() {
   };
 
   const handleClick = (direction) => {
-    let newStep = currentStep;
-
-    direction === "next" ? newStep++ : newStep--;
-    newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
+    event.preventDefault();
+    if (direction === "next") {
+      document
+        .querySelector("form")
+        .dispatchEvent(
+          new Event("submit", { cancelable: true, bubbles: true })
+        );
+    } else {
+      setCurrentStep((prevStep) => prevStep - 1);
+    }
   };
 
   return (
@@ -47,23 +61,23 @@ export default function Home() {
             </div>
 
             {/* Content & Control */}
-            <div className="col-span-6">
-              <div className="min-h-[400px]">
-                <StepperContext.Provider
-                  value={{ userData, setUserData, setCurrentStep }}
-                >
-                  {displayStep(currentStep)}
-                </StepperContext.Provider>
-              </div>
+            <StepperContext.Provider
+              value={{
+                userData,
+                setUserData,
+                setCurrentStep,
+                currentStep,
+                steps,
+                handleFormSubmit,
+                handleClick,
+              }}
+            >
+              <div className="col-span-6">
+                <div className="min-h-[400px]">{displayStep(currentStep)}</div>
 
-              {currentStep !== steps.length && (
-                <StepperControl
-                  handleClick={handleClick}
-                  currentStep={currentStep}
-                  steps={steps}
-                />
-              )}
-            </div>
+                {currentStep !== steps.length && <StepperControl />}
+              </div>
+            </StepperContext.Provider>
           </div>
         </div>
       </div>

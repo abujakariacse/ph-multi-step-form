@@ -18,6 +18,7 @@ const CustomDatePicker = ({
         dateFormat="dd/MM/yyyy"
         placeholderText={value ? dateConverter(value) : "Select a date"}
         selected={selected}
+        minDate={new Date()}
         onChange={handleChange}
         className={`min-w-full px-3 text-subHeading ${
           value ? "placeholder:text-black" : "placeholder:text-secondary"

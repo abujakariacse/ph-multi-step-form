@@ -1,8 +1,14 @@
 import { StepperContext } from "@/contexts/StepperContext";
+
 import { useContext } from "react";
 
 export default function Final() {
-  const { userData, setUserData, setCurrentStep } = useContext(StepperContext);
+  const { userData, setUserData, setCurrentStep, currentStep, steps } =
+    useContext(StepperContext);
+
+  if (currentStep === steps.length) {
+    console.log({ final: userData });
+  }
 
   return (
     <div className="container  h-[400px] flex justify-center items-center">

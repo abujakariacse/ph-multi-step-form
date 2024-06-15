@@ -1,4 +1,4 @@
-const InputField = ({ children, type, name, placeholder, value, register }) => {
+const InputField = ({ children, name, placeholder, value, register }) => {
   return (
     <div className="max-w-sm">
       <label className="block text-slate-700  mb-2 text-xs" htmlFor={name}>
@@ -10,7 +10,7 @@ const InputField = ({ children, type, name, placeholder, value, register }) => {
         id={name}
         defaultValue={value || ""}
         name={name}
-        type={type || "text"}
+        type="text"
         placeholder={placeholder}
         {...register(name, { required: true })}
       />

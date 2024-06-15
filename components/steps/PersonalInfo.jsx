@@ -6,35 +6,30 @@ import countryList from "react-select-country-list";
 import Select from "../Select";
 import CustomDatePicker from "../CustomDatePicker";
 import { StepperContext } from "@/contexts/StepperContext";
-
 import { useForm, Controller } from "react-hook-form";
+import { personalInfoSchema } from "@/schema/zodValidationSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-const PersonalInfo = () => {
-  const { userData, setUserData } = useContext(StepperContext);
-
-  // Fetch country options using useMemo for optimization
+const PersonalInfo = ({}) => {
+  const { userData, handleFormSubmit } = useContext(StepperContext);
   const options = useMemo(() => countryList().getData(), []);
-
-  const onSubmit = (data) => {
-    setUserData({
-      ...userData,
-      ...data,
-    });
-  };
-
-  console.log({ userData }, "line 25");
 
   const {
     control,
     register,
     handleSubmit,
-
     formState: { errors },
-  } = useForm();
+    setValue,
+  } = useForm({
+    resolver: zodResolver(personalInfoSchema),
+    defaultValues: {
+      birthdate: userData?.birthdate ? new Date(userData.birthdate) : null,
+    },
+  });
 
   return (
     <div>
-      <div className="">
+      <div>
         <h1 className="text-heading font-semibold text-slate-80000">
           Personal Info
         </h1>
@@ -43,12 +38,11 @@ const PersonalInfo = () => {
           phone
         </p>
       </div>
-
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(handleFormSubmit)}
         className="flex flex-col gap-4 py-4"
       >
-        <div className="">
+        <div>
           <InputField
             name={"name"}
             placeholder={"e.g. Abu Jakaria"}
@@ -61,7 +55,6 @@ const PersonalInfo = () => {
             {errors?.name && "Name is required"}
           </p>
         </div>
-
         <div>
           <Controller
             rules={{ required: "Birthdate is required" }}
@@ -69,7 +62,10 @@ const PersonalInfo = () => {
             name="birthdate"
             render={({ field: { onChange, onBlur, value } }) => (
               <CustomDatePicker
-                handleChange={onChange}
+                handleChange={(date) => {
+                  onChange(date);
+                  setValue("birthdate", date, { shouldValidate: true });
+                }}
                 handleBlur={onBlur}
                 selected={value}
                 name="birthdate"
@@ -80,11 +76,10 @@ const PersonalInfo = () => {
             )}
           />
           <p className="text-xs text-red-500 py-1">
-            {errors?.birthdate?.message}
+            {errors?.birthdate && errors?.birthdate?.message}
           </p>
         </div>
-
-        <div className="">
+        <div>
           <Select
             register={register}
             label="Nationality"
@@ -97,12 +92,10 @@ const PersonalInfo = () => {
             {errors?.country && "Select a country"}
           </p>
         </div>
-
-        <div className="">
+        <div>
           <InputField
             name={"email"}
             placeholder={"e.g. abujakaria316@gmail.com"}
-            type={"email"}
             value={userData?.email}
             register={register}
           >
@@ -112,22 +105,22 @@ const PersonalInfo = () => {
             {errors?.email && "Email is required"}
           </p>
         </div>
-
-        <div className="">
+        <div>
           <InputField
             name={"phone"}
             placeholder={"e.g. 01316460386"}
-            type={"number"}
             value={userData?.phone}
             register={register}
           >
             Phone
           </InputField>
           <p className="text-xs text-red-500 py-1">
-            {errors?.phone && "Phone is required"}
+            {errors?.phone && errors?.phone?.message}
           </p>
         </div>
-        <input type="submit" value="Test" />
+        <button type="submit" className="hidden">
+          Submit
+        </button>
       </form>
     </div>
   );

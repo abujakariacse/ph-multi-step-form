@@ -4,25 +4,23 @@ import InputField from "../InputField";
 import { useContext, useState } from "react";
 
 import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { healthSchema } from "@/schema/zodValidationSchema";
 const Health = () => {
-  const { userData, setUserData } = useContext(StepperContext);
+  const { userData, setUserData, handleFormSubmit } =
+    useContext(StepperContext);
 
   const {
-    control,
     register,
     handleSubmit,
 
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: zodResolver(healthSchema),
+  });
 
-  const onSubmit = (data) => {
-    setUserData({
-      ...userData,
-      ...data,
-    });
-  };
+  console.log({ userData });
 
-  console.log(userData);
   return (
     <div>
       <div>
@@ -36,7 +34,7 @@ const Health = () => {
       </div>
 
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(handleFormSubmit)}
         className="flex flex-col gap-4 py-4"
       >
         <div className="max-w-sm">
@@ -87,7 +85,7 @@ const Health = () => {
             Emergency Contact
           </InputField>
           <p className="text-xs text-red-500 py-1">
-            {errors?.emergencyContact && "Emergency contact is required"}
+            {errors?.emergencyContact && errors?.emergencyContact?.message}
           </p>
         </div>
 
@@ -119,7 +117,7 @@ const Health = () => {
             {errors?.healthCondition?.message}
           </p>
         </div>
-        <input type="submit" value="Test" />
+        <input type="submit" value="Submit" className="hidden" />
       </form>
     </div>
   );

@@ -8,24 +8,29 @@ import { StepperContext } from "@/contexts/StepperContext";
 import { accommodations } from "@/utils/data";
 
 import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { travelPreferenceSchema } from "@/schema/zodValidationSchema";
 
 const TravelPreference = () => {
-  const { userData, setUserData } = useContext(StepperContext);
-  console.log(userData);
+  const { userData, setUserData, handleFormSubmit } =
+    useContext(StepperContext);
+
   const {
     control,
     register,
     handleSubmit,
-
     formState: { errors },
-  } = useForm();
+    setValue,
+  } = useForm({
+    defaultValues: {
+      departureDate: userData?.departureDate
+        ? new Date(userData.departureDate)
+        : null,
+      returnDate: userData?.returnDate ? new Date(userData.returnDate) : null,
+    },
+  });
 
-  const onSubmit = (data) => {
-    setUserData({
-      ...userData,
-      ...data,
-    });
-  };
+  console.log({ userData });
 
   return (
     <div>
@@ -40,7 +45,7 @@ const TravelPreference = () => {
       </div>
 
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(handleFormSubmit)}
         className="flex flex-col gap-4 py-4"
       >
         <div>
@@ -48,9 +53,12 @@ const TravelPreference = () => {
             rules={{ required: "Depature date is required" }}
             control={control}
             name={"departureDate"}
-            render={({ field: { onChange, onBlur, value, ref } }) => (
+            render={({ field: { onChange, onBlur, value } }) => (
               <CustomDatePicker
-                handleChange={onChange}
+                handleChange={(date) => {
+                  onChange(date);
+                  setValue("departureDate", date, { shouldValidate: true });
+                }}
                 handleBlur={onBlur}
                 selected={value}
                 name="departureDate"
@@ -71,7 +79,10 @@ const TravelPreference = () => {
             name={"returnDate"}
             render={({ field: { onChange, onBlur, value, ref } }) => (
               <CustomDatePicker
-                handleChange={onChange}
+                handleChange={(date) => {
+                  onChange(date);
+                  setValue("returnDate", date, { shouldValidate: true });
+                }}
                 handleBlur={onBlur}
                 selected={value}
                 name="returnDate"
@@ -82,7 +93,7 @@ const TravelPreference = () => {
             )}
           />
           <p className="text-xs text-red-500 py-1">
-            {errors?.returnDate?.message}
+            {errors?.returnDate && errors?.returnDate?.message}
           </p>
         </div>
 
@@ -113,7 +124,7 @@ const TravelPreference = () => {
             {errors?.specialRequest && "Special Request is required"}
           </p>
         </div>
-        <input type="submit" value="Test" />
+        <input type="submit" value="Submit" className="hidden" />
       </form>
     </div>
   );
