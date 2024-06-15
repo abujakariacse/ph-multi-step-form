@@ -19,8 +19,6 @@ const Health = () => {
     resolver: zodResolver(healthSchema),
   });
 
-  console.log({ userData });
-
   return (
     <div>
       <div>

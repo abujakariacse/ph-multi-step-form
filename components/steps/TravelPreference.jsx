@@ -30,8 +30,6 @@ const TravelPreference = () => {
     },
   });
 
-  console.log({ userData });
-
   return (
     <div>
       <div className="">

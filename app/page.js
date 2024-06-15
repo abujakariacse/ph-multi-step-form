@@ -36,7 +36,7 @@ export default function Home() {
     }
   };
 
-  const handleClick = (direction) => {
+  const handleClick = async (direction) => {
     event.preventDefault();
     if (direction === "next") {
       document
@@ -44,6 +44,19 @@ export default function Home() {
         .dispatchEvent(
           new Event("submit", { cancelable: true, bubbles: true })
         );
+
+      if (currentStep === steps.length) {
+        const res = await fetch("/api/travel", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await res.json();
+        console.log(data);
+      }
     } else {
       setCurrentStep((prevStep) => prevStep - 1);
     }
