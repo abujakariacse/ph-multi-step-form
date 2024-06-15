@@ -7,11 +7,16 @@ import PersonalInfo from "@/components/steps/PersonalInfo";
 import TravelPreference from "@/components/steps/TravelPreference";
 import { StepperContext } from "@/contexts/StepperContext";
 import { steps } from "@/utils/data";
+import { AnimatePresence, motion } from "framer-motion";
+
+import { useMeasure } from "@uidotdev/usehooks";
 
 import { useEffect, useState } from "react";
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(1);
   const [userData, setUserData] = useState({});
+
+  const [ref, { width, height }] = useMeasure();
 
   const handleFormSubmit = (data) => {
     setUserData({
@@ -64,10 +69,14 @@ export default function Home() {
   }, [currentStep, steps.length]);
 
   return (
-    <div className="pattern-bg">
+    <div className=" bg-[url('/bodyBg.png')] bg-cover bg-center bg-no-repeat">
       <div className="flex items-center justify-center min-h-screen">
-        <div className="mx-auto rounded-lg bg-white md:w-8/12 p-5 ">
-          <div className="md:grid md:grid-cols-12 md:gap-10 ">
+        <motion.div
+          animate={{ height: `${height + 50}px` }}
+          transition={{ duration: 0.5 }}
+          className="mx-auto rounded-lg bg-white md:w-8/12 "
+        >
+          <div ref={ref} className="md:grid md:grid-cols-12 md:gap-10 p-5 ">
             {/* Stepper */}
             <div className="w-full col-span-5 flex md:gap-16 md:justify-normal justify-center">
               <Stepper steps={steps} currentStep={currentStep} />
@@ -87,13 +96,17 @@ export default function Home() {
               }}
             >
               <div className="col-span-6">
-                <div className="min-h-[400px]">{displayStep(currentStep)}</div>
+                <AnimatePresence mode="popLayout">
+                  <div className="min-h-[400px]  ">
+                    {displayStep(currentStep)}
+                  </div>
 
-                {currentStep !== steps.length && <StepperControl />}
+                  {currentStep !== steps.length && <StepperControl />}
+                </AnimatePresence>
               </div>
             </StepperContext.Provider>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

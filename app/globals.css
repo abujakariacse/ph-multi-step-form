@@ -25,17 +25,6 @@ body {
 .react-datepicker-wrapper {
   display: block !important;
 }
-/* 
-.pattern-bg {
-  background-image: url("https://i.ibb.co/c17mLqC/pattern-home.jpg");
-} */
-
-.pattern-bg {
-  background-image: url("https://i.ibb.co/QYyrYkW/Rectangle-2.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
 
 * {
   padding: 0;

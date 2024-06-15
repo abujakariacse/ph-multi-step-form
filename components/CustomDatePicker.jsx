@@ -8,6 +8,7 @@ const CustomDatePicker = ({
   name,
   value,
   children,
+  type = "",
 }) => {
   return (
     <div className="max-w-sm">
@@ -18,7 +19,7 @@ const CustomDatePicker = ({
         dateFormat="dd/MM/yyyy"
         placeholderText={value ? dateConverter(value) : "Select a date"}
         selected={selected}
-        minDate={new Date()}
+        minDate={type !== "birthday" && new Date()}
         onChange={handleChange}
         className={`min-w-full px-3 text-subHeading ${
           value ? "placeholder:text-black" : "placeholder:text-secondary"

@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useMemo, useContext } from "react";
 import InputField from "../InputField";
 import countryList from "react-select-country-list";
@@ -70,6 +69,7 @@ const PersonalInfo = ({}) => {
                 selected={value}
                 name="birthdate"
                 value={userData?.birthdate}
+                type="birthday"
               >
                 Birthdate
               </CustomDatePicker>

@@ -3,7 +3,7 @@ const Select = ({ options, placeholder, name, label, register, value }) => {
     <div className="relative">
       <label className="block text-slate-700  mb-2 text-xs" htmlFor={name}>
         {label}
-        <span className="text-red-500 italic">*</span>
+        <span className="text-red-500 italic"> *</span>
       </label>
       <select
         defaultValue={value || ""}
