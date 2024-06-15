@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
-    "@next/font": "^14.2.4",
     "@uidotdev/usehooks": "^2.4.1",
     "framer-motion": "^11.2.10",
     "mongoose": "^8.4.1",
