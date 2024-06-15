@@ -61,7 +61,7 @@ const Stepper = ({ steps, currentStep }) => {
     stepsRef.current = stepsState;
     const current = updateStep(currentStep - 1, stepsRef.current);
     setNewStep(current);
-  }, []);
+  }, [steps, currentStep]);
 
   const stepsDisplay = newStep.map((step, index) => {
     return (
