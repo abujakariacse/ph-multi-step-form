@@ -10,7 +10,7 @@ const Select = ({ options, placeholder, name, label, register, value }) => {
         {...register(name, { required: true })}
         id={name}
         name={name}
-        className="block max-w-sm w-full text-sm  transition duration-75 border rounded h-10 outline-none text-grayy-700 pl-2 cursor-pointer"
+        className="block max-w-sm w-full text-sm  transition duration-75 border rounded h-9 outline-none text-grayy-700 pl-2 cursor-pointer"
       >
         <option value="">{placeholder}</option>
         {options?.map((option) => (

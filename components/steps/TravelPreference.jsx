@@ -34,10 +34,10 @@ const TravelPreference = () => {
   return (
     <div>
       <div className="">
-        <h1 className="text-heading font-medium text-slate-80000 ">
+        <h1 className="text-heading font-medium text-slate-80000 text-center md:text-left">
           Travel Preference
         </h1>
-        <p className="text-xs text-secondary py-2 ">
+        <p className="text-xs text-secondary py-2 text-center md:text-left">
           Please provide departure date, return date, accommdation preference,
           special request
         </p>
