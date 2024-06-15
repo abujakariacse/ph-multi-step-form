@@ -87,8 +87,20 @@ const Stepper = ({ steps, currentStep }) => {
           ></div>
         </div>
         <div className="pt-1 pb-8">
-          <p className="mb-2 text-xs text-secondary">Step {index + 1}</p>
-          <p className="text-secondary text-sm">{step?.description}</p>
+          <p
+            className={`mb-2 text-xs ${
+              step?.completed ? "text-primary" : "text-secondary"
+            } `}
+          >
+            Step {index + 1}
+          </p>
+          <p
+            className={`${
+              step?.completed ? "text-primary" : "text-secondary"
+            } text-sm`}
+          >
+            {step?.description}
+          </p>
         </div>
       </div>
     );
