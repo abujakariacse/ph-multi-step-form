@@ -25,7 +25,7 @@ MONGODB_URL = mongodb+srv://username:<password>@cluster0.yjsytkj.mongodb.net/ph-
 4.Install dependencies:
 `npm install`
 
-#Running the Application in Dev Mode
+## Running the Application in Dev Mode
 
 1. Start the application:
    `npm run dev`
@@ -33,7 +33,7 @@ MONGODB_URL = mongodb+srv://username:<password>@cluster0.yjsytkj.mongodb.net/ph-
 2. The server will be running at:
    `http://localhost:3000.`
 
-#Running the Application in Production Build
+## Running the Application in Production Build
 
 1. Build the application:
    `npm run build`
